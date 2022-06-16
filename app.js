@@ -8,6 +8,9 @@ var bodyParser = require("body-parser");
 const { Router } = require("express");
 const { send } = require("process");
 const { route } = require("express/lib/application");
+app.use(express.json());
+app.use(express.urlencoded());
+
 
 const data = [{
   firstName : "charnnarong" ,
@@ -15,19 +18,39 @@ const data = [{
   phone : "0618514442" ,
   company : "in2it" 
 }]
-router.get("/", (req, res) => {
+router.get("/form", (req, res) => {
   
-  res.send(req.getFormattedString());
+  res.sendFile(__dirname + '/index.html') ;
+
 });
 
-router.get("/register/:firstname/:lastname/:phone/:company/:email/:id", (req, res) => {
-  var vCard = vCardsJS();
-  var fileName = req.params.id;
+// router.get("/register/:firstname/:lastname/:phone/:company/:email/:id", (req, res) => {
+//   var vCard = vCardsJS();
+//   var fileName = req.params.id;
 
-  vCard.firstName = req.params.firstname;
-  vCard.lastName = req.params.lastname;
-  vCard.workPhone = req.params.phone;
-  vCard.organization = req.params.company;
+//   vCard.firstName = req.params.firstname;
+//   vCard.lastName = req.params.lastname;
+//   vCard.workPhone = req.params.phone;
+//   vCard.organization = req.params.company;
+
+//   vCard.saveToFile(`${fileName}.vcf`);
+//   res.send(vCard.getFormattedString());
+//   //res.redirect('/' , vCard);
+//   //res.redirect('https://www.youtube.com/watch?v=sqjzO3loj2s&ab_channel=DevNami');
+//   //const file = `${__dirname}/${firstName}.vcf`;
+//   //res.sendFile(path.join(__dirname+'/index.html'));
+// });
+
+router.get("/register", (req, res) => {
+  var vCard = vCardsJS();
+
+  const {firstname , lastname , phone , company , id} = req.body ;
+  var fileName = id;
+
+  vCard.firstName = firstname;
+  vCard.lastName = lastname;
+  vCard.workPhone = phone;
+  vCard.organization = company;
 
   vCard.saveToFile(`${fileName}.vcf`);
   res.send(vCard.getFormattedString());
@@ -36,7 +59,6 @@ router.get("/register/:firstname/:lastname/:phone/:company/:email/:id", (req, re
   //const file = `${__dirname}/${firstName}.vcf`;
   //res.sendFile(path.join(__dirname+'/index.html'));
 });
-
 app.use(router) ;
 
 router.get("/download/:id", (req , res) => {
