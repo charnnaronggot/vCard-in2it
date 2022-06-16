@@ -6,6 +6,8 @@ const path = require('path') ;
 var vCardsJS = require("vcards-js");
 var bodyParser = require("body-parser");
 const { Router } = require("express");
+const { send } = require("process");
+const { route } = require("express/lib/application");
 
 const data = [{
   firstName : "charnnarong" ,
@@ -13,15 +15,15 @@ const data = [{
   phone : "0618514442" ,
   company : "in2it" 
 }]
-app.get("/", (req, res) => {
-
-  res.send("Hello World!");
+router.get("/", (req, res) => {
+  
+  res.send(req.getFormattedString());
 });
 
 router.get("/register/:firstname/:lastname/:phone/:company/:email/:id", (req, res) => {
   var vCard = vCardsJS();
   var fileName = req.params.id;
-  
+
   vCard.firstName = req.params.firstname;
   vCard.lastName = req.params.lastname;
   vCard.workPhone = req.params.phone;
@@ -29,18 +31,21 @@ router.get("/register/:firstname/:lastname/:phone/:company/:email/:id", (req, re
 
   vCard.saveToFile(`${fileName}.vcf`);
   res.send(vCard.getFormattedString());
-
+  //res.redirect('/' , vCard);
+  //res.redirect('https://www.youtube.com/watch?v=sqjzO3loj2s&ab_channel=DevNami');
   //const file = `${__dirname}/${firstName}.vcf`;
   //res.sendFile(path.join(__dirname+'/index.html'));
 });
 
 app.use(router) ;
 
-app.get("/download"), (req , res) => {
-   
-    const file = `${__dirname}/${firstName}.vcf`;
+router.get("/download/:id", (req , res) => {
+    const id = req.params.id ; 
+    const fileName = `${__dirname} + ${id}`;
 
-}
+    res.download(fileName) ;
+    res.send(id);
+});
 app.listen(port, () => {
   console.log(`Listening at http://localhost:${port}`);
 });
