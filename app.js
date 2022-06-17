@@ -12,12 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded());
 
 
-const data = [{
-  firstName : "charnnarong" ,
-  lastName : "charoensanongkun" , 
-  phone : "0618514442" ,
-  company : "in2it" 
-}]
+
 router.get("/form", (req, res) => {
   
   res.sendFile(__dirname + '/index.html') ;
@@ -41,13 +36,12 @@ router.get("/form", (req, res) => {
 //   //res.sendFile(path.join(__dirname+'/index.html'));
 // });
 
-router.get("/register", (req, res) => {
+router.post("/register", (req, res) => {
   var vCard = vCardsJS();
+  var {firstname , lastname , phone , company} = req.body
+  var fileName =10;
 
-  const {firstname , lastname , phone , company , id} = req.body ;
-  var fileName = id;
-
-  vCard.firstName = firstname;
+  vCard.firstName =firstname;
   vCard.lastName = lastname;
   vCard.workPhone = phone;
   vCard.organization = company;
@@ -59,6 +53,7 @@ router.get("/register", (req, res) => {
   //const file = `${__dirname}/${firstName}.vcf`;
   //res.sendFile(path.join(__dirname+'/index.html'));
 });
+
 app.use(router) ;
 
 router.get("/download/:id", (req , res) => {
