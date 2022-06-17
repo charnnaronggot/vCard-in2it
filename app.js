@@ -19,35 +19,20 @@ router.get("/form", (req, res) => {
 
 });
 
-// router.get("/register/:firstname/:lastname/:phone/:company/:email/:id", (req, res) => {
-//   var vCard = vCardsJS();
-//   var fileName = req.params.id;
-
-//   vCard.firstName = req.params.firstname;
-//   vCard.lastName = req.params.lastname;
-//   vCard.workPhone = req.params.phone;
-//   vCard.organization = req.params.company;
-
-//   vCard.saveToFile(`${fileName}.vcf`);
-//   res.send(vCard.getFormattedString());
-//   //res.redirect('/' , vCard);
-//   //res.redirect('https://www.youtube.com/watch?v=sqjzO3loj2s&ab_channel=DevNami');
-//   //const file = `${__dirname}/${firstName}.vcf`;
-//   //res.sendFile(path.join(__dirname+'/index.html'));
-// });
-
-router.post("/register", (req, res) => {
+router.get("/register", (req, res) => {
   var vCard = vCardsJS();
-  var {firstname , lastname , phone , company} = req.body
-  var fileName =10;
 
-  vCard.firstName =firstname;
-  vCard.lastName = lastname;
-  vCard.workPhone = phone;
-  vCard.organization = company;
+  var id = req.query.id;
+  
+  vCard.firstName =req.query.firstname;
+  vCard.lastName = req.query.lastname;
+  vCard.workPhone = req.query.phone;
+  vCard.organization = req.query.company;
+  vCard.email = req.query.email ;
 
-  vCard.saveToFile(`${fileName}.vcf`);
+  vCard.saveToFile(`${id}.vcf`);
   res.send(vCard.getFormattedString());
+  res.redirect()
   //res.redirect('/' , vCard);
   //res.redirect('https://www.youtube.com/watch?v=sqjzO3loj2s&ab_channel=DevNami');
   //const file = `${__dirname}/${firstName}.vcf`;
