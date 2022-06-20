@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class = "card-header">แบบฟอร์ม</div>
+                                <div class ="card-body">
+
+                                    <form action="{{route('addEmployee')}}" method ="post" >
+                                        @csrf
+                                        <div class = "form-group">
+                                            <label for="firstname">ชื่อ</label>
+                                            <input type="text" class = "form-control" name = "firstname">
+                                            <label for="lastname">นามสกุล</label>
+                                            <input type="text" class = "form-control" name = "lastname">
+                                            <label for="extention">extention</label>
+                                            <input type="text" class = "form-control" name = "extention">
+                                            <label for="email">email</label>
+                                            <input type="text" class = "form-control" name = "email">
+                                            <label for="password">password</label>
+                                            <input type="text" class = "form-control" name = "password">
+                                            <label for="officerCode">officerCode</label>
+                                            <input type="text" class = "form-control" name = "officerCode">
+                                            <label for="reportTo">reportTo</label>
+                                            <input type="text" class = "form-control" name = "reportTo">
+                                            <label for="jobTitle">jobTitle</label>
+                                            <input type="text" class = "form-control" name = "jobTitle">
+
+                                        </div>
+                                       
+                                        <input type="submit" value = บันทึก  class="btn btn-primary">
+                                    </form>
+
+                                </div>
+                    </div>
+     
+</body>
+</html>
